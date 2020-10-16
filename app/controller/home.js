@@ -2,9 +2,8 @@ const BaseController = require('./base')
 
 class HomeController extends BaseController {
   async index() {
-    console.log('00000000000000000000000000000000000000')
-    this.success('hello1')
-    // this.error(500, '111')
+    // this.success('hello1')
+    this.error(500, '111')
     // this.success('hello')
   }
 
@@ -15,8 +14,8 @@ class HomeController extends BaseController {
     ctx.body = _name
   }
 
-  async error() {
-    this.ctx.throw(501, 'hahaa')
+  async error1() {
+    this.ctx.throw('hahaa', 501)
   }
 }
 

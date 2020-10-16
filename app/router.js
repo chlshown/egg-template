@@ -10,5 +10,5 @@ module.exports = app => {
   } = app
   router.get('/', controller.home.index)
   router.get('/hello', controller.home.hello)
-  router.get('/error', controller.home.error)
+  router.get('/error', controller.home.error1)
 }

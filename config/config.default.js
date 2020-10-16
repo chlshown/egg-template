@@ -1,4 +1,5 @@
 /* eslint valid-jsdoc: "off" */
+const path = require('path')
 const serverCode = require('../config/serverCode')
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -42,6 +43,19 @@ module.exports = appInfo => {
     //     const reg = /iphone|ipad|ipod/i;
     //     return reg.test(ctx.get('user-agent'));
     // },
+  }
+
+  config.customLogger = {
+    businessErrorLogger: {
+      file: path.join(appInfo.root, 'logs/business-error.log'),
+      formatter(meta) {
+        return `[${meta.date}] ${meta.message}`
+      },
+      // ctx logger
+      contextFormatter(meta) {
+        return `[${meta.date}] [${meta.ctx.method} ${meta.ctx.url}] ${meta.message}`
+      },
+    },
   }
 
   return {

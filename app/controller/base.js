@@ -14,8 +14,9 @@ class BaseController extends Controller {
   error(code, message = '', options) {
     const {
       status = 200
-    } = options
+    } = options || {}
     this.ctx.status = status
+    this.ctx.getLogger('businessErrorLogger').error(new Error(`status:${status} code:${code} message:${message}`))
     this.ctx.body = {
       success: false,
       code: code || this.config.serverCode.NORMAL_ERR,
