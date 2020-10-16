@@ -28,7 +28,12 @@ module.exports = appInfo => {
 
   config.middleware = ['errorHandler']
 
-  config.errorHandler = {
+  config.jwt = {
+    secret: '880917'
+  }
+
+  // error & log
+  .config.errorHandler = {
     // 通用配置（以下是重点）
     // enable:true, // 控制中间件是否开启。
     // match: '/user/list', // 设置只有符合某些规则的请求才会经过这个中间件（匹配路由）

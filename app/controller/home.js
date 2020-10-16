@@ -17,6 +17,18 @@ class HomeController extends BaseController {
   async error1() {
     this.ctx.throw('hahaa', 501)
   }
+
+  async login() {
+    const ctx = this.ctx
+    const token = ctx.app.jwt.sign({
+      ...ctx.request.body,
+    }, this.app.config.jwt.secret, {
+      expiresIn: '60m', // 时间根据自己定，具体可参考jsonwebtoken插件官方说明
+    })
+    this.success({
+      token,
+    })
+  }
 }
 
 module.exports = HomeController
