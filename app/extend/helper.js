@@ -1,21 +1,11 @@
+const chalk = require('chalk')
+
 module.exports = {
-  handleResponse({
-    code,
-    data,
-    msg,
-    message
-  } = {}) {
-    return {
-      code: code || this.config.serverCode.SUCCESS_CODE,
-      msg: msg || message || '',
-      data: data || {}
-    }
-  },
-  handleSuccess(data = {}) {
-    return {
-      code: this.config.serverCode.SUCCESS_CODE,
-      msg: '',
-      data: data || {}
-    }
+    debug(msg) {
+        const ctx = this.ctx
+        const path = ctx.path
+        console.log(chalk.blue(`Path:${path}`))
+        msg = typeof msg === 'object' ? JSON.stringify(msg) : msg
+        console.log(chalk.magenta(msg))
+    },
   }
-}

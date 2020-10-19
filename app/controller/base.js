@@ -11,17 +11,22 @@ class BaseController extends Controller {
     }
   }
 
-  error(code, message = '', options) {
-    const {
-      status = 200
-    } = options || {}
-    this.ctx.status = status
-    this.ctx.getLogger('businessErrorLogger').error(new Error(`status:${status} code:${code} message:${message}`))
-    this.ctx.body = {
-      success: false,
-      code: code || this.config.serverCode.NORMAL_ERR,
-      msg: message,
-      data: null
+  error(msg, code) {
+    this.ctx.throw(new this.config.BusinessError(msg, code))
+  }
+
+  async callService(name, method, data) {
+    const res = await this.ctx.service[name][method](data)
+    return this.handleServiceResponse(res)
+  }
+
+  handleServiceResponse(res) {
+    console.log(this.ctx.helper.debug(res))
+    if (res.success) {
+      return res.data
+    } else {
+      this.error(res.msg, res.code)
+      return null
     }
   }
 }

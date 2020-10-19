@@ -3,15 +3,15 @@ const BaseController = require('./base')
 class HomeController extends BaseController {
   async index() {
     // this.success('hello1')
-    this.error(500, '111')
+    // this.error('EEEEEE')
     // this.success('hello')
-  }
-
-  async hello() {
-    const ctx = this.ctx
-    const name = ctx.query.name
-    const _name = await ctx.service.hello.getName(name)
-    ctx.body = _name
+    const data = await this.callService('user', 'addUser', {
+      name: 'ray',
+      password: '123456'
+    })
+    this.success({
+      data,
+    })
   }
 
   async error1() {
@@ -19,15 +19,27 @@ class HomeController extends BaseController {
   }
 
   async login() {
-    const ctx = this.ctx
-    const token = ctx.app.jwt.sign({
-      ...ctx.request.body,
-    }, this.app.config.jwt.secret, {
-      expiresIn: '60m', // 时间根据自己定，具体可参考jsonwebtoken插件官方说明
-    })
-    this.success({
-      token,
-    })
+    const { ctx } = this
+    const { user, password } = ctx
+    if (this.config.token) {
+      const userInfo = ctx.service.user.checkPassword(user, password)
+      if (userInfo) {
+        const token = ctx.app.jwt.sign({
+          ...ctx.request.body,
+        }, this.app.config.jwt.secret, {
+          expiresIn: '60m', // 时间根据自己定，具体可参考jsonwebtoken插件官方说明
+        })
+        this.success({
+          token,
+        })
+      } else {
+        this.error(500, '用户名或密码错误')
+      }
+    } else {
+      this.success({
+        token: 'no-token',
+      })
+    }
   }
 }
 

@@ -1,6 +1,8 @@
 /* eslint valid-jsdoc: "off" */
 const path = require('path')
 const serverCode = require('../config/serverCode')
+const { BusinessError, HttpError } = require('../config/error')
+
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -11,29 +13,32 @@ module.exports = appInfo => {
    **/
   const config = exports = {
     serverCode,
+    BusinessError,
+    HttpError,
+    token: false,
   }
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1602569528678_6877'
 
   // add your middleware config here
-  config.middleware = [
-    'test'
-  ]
+  config.middleware = []
+  config.middleware.push('errorHandler')
+  if (config.token) {
+    config.middleware.push('auth')
+  }
 
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
   }
 
-  config.middleware = ['errorHandler']
-
   config.jwt = {
     secret: '880917'
   }
 
   // error & log
-  .config.errorHandler = {
+  config.errorHandler = {
     // 通用配置（以下是重点）
     // enable:true, // 控制中间件是否开启。
     // match: '/user/list', // 设置只有符合某些规则的请求才会经过这个中间件（匹配路由）
