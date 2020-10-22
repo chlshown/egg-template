@@ -1,7 +1,10 @@
 /* eslint valid-jsdoc: "off" */
 const path = require('path')
 const serverCode = require('../config/serverCode')
-const { BusinessError, HttpError } = require('../config/error')
+const {
+  BusinessError,
+  HttpError
+} = require('../config/error')
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -33,8 +36,19 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   }
 
+  // plugin
   config.jwt = {
     secret: '880917'
+  }
+
+  config.cors = {
+    origin: '*', // 访问白名单,根据你自己的需要进行设置
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  }
+
+  config.mongoose = {
+    url: 'mongodb://localhost:27017/test',
+    options: {},
   }
 
   // error & log

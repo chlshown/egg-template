@@ -6,12 +6,19 @@ class HomeController extends BaseController {
     // this.error('EEEEEE')
     // this.success('hello')
     const data = await this.callService('user', 'addUser', {
-      name: 'ray',
+      name: 'test',
       password: '123456'
     })
-    this.success({
-      data,
-    })
+    this.success(data)
+  }
+
+  async getUserByName() {
+    // this.success('hello1')
+    // this.error('EEEEEE')
+    // this.success('hello')
+    const data = await this.callService('user', 'getUserByName', 'test')
+
+    this.success(data)
   }
 
   async error1() {
@@ -19,8 +26,13 @@ class HomeController extends BaseController {
   }
 
   async login() {
-    const { ctx } = this
-    const { user, password } = ctx
+    const {
+      ctx
+    } = this
+    const {
+      user,
+      password
+    } = ctx
     if (this.config.token) {
       const userInfo = ctx.service.user.checkPassword(user, password)
       if (userInfo) {

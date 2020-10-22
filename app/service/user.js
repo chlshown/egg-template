@@ -2,27 +2,42 @@ const Service = require('./base')
 
 class UserService extends Service {
   async addUser(obj) {
-    const { password } = obj
+    const {
+      name,
+      password
+    } = obj
     if (this.checkPassword(password)) {
-        // TODO Dao
-        return this.success()
+      // 更新用户信息
+      const {
+        ctx,
+      } = this
+      const result = await ctx.model.User.create({
+        name,
+      })
+      return this.success(result)
     } else {
-        return this.error('密码不正确')
+      return this.error('密码不正确')
     }
   }
 
   checkPassword() {
-      return false
+    return true
   }
 
-  async getUser (user) {
-    if (user === 'ray') {
-        return {
-            user: 'ray',
-            password: 'ray'
-        }
-    } else {
-        this.error('Service Error')
+  async getUserByName(name) {
+    const {
+      ctx,
+    } = this
+    try {
+      const results = await ctx.model.User.find({
+        name,
+      })
+      if (!results || !Array.isArray(results) || results.length === 0) {
+        return this.error('未找到对应的用户')
+      }
+      return this.success(results)
+    } catch (err) {
+      ctx.throw(err.message)
     }
   }
 }

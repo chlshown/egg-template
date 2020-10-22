@@ -21,7 +21,7 @@ class BaseController extends Controller {
   }
 
   handleServiceResponse(res) {
-    console.log(this.ctx.helper.debug(res))
+    // this.ctx.helper.debug(res)
     if (res.success) {
       return res.data
     } else {

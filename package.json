@@ -11,7 +11,9 @@
     "babel-register": "^6.26.0",
     "chalk": "^4.1.0",
     "egg": "^2.15.1",
+    "egg-cors": "^2.2.3",
     "egg-jwt": "^3.1.7",
+    "egg-mongoose": "^3.3.1",
     "egg-scripts": "^2.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-node": "^11.1.0"
