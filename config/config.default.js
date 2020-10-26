@@ -43,6 +43,7 @@ module.exports = appInfo => {
 
   config.cors = {
     origin: '*', // 访问白名单,根据你自己的需要进行设置
+    credentials: true,
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
   }
 
