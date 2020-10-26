@@ -47,7 +47,7 @@ module.exports = appInfo => {
   }
 
   config.mongoose = {
-    url: 'mongodb://localhost:27017/test',
+    url: 'mongodb://101.132.101.160:27017/ray',
     options: {},
   }
 

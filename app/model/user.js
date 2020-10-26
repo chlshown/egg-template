@@ -7,12 +7,7 @@ module.exports = app => {
       type: String,
       unique: true,
       required: true,
-    },
-    _id: {
-      type: Schema.ObjectId,
-      ref: 'Tags',
-      required: true,
-    },
+    }
   })
   return mongoose.model('User', UserSchema)
 }
